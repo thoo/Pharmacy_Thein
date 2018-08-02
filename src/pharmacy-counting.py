@@ -18,7 +18,6 @@ args = parser.parse_args()
 
 
 
-#Loop through the whole data    
 
 def test_run():
 	#For the big data file, we will set chunksize 
