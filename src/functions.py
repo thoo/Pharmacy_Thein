@@ -3,6 +3,7 @@ import os
 import numpy as np 
 
 def process_fun(data):
+	data.dropna(how='any',inplace=True)
 	"""This function will return drug name, total drug cost 
 	and total number of prescribers from input data files 
 	in descending order by total_cost followed by 'drug_name'."""
@@ -19,7 +20,8 @@ def read_csv(filename):
 
 	"""
 
-	data=pd.read_csv(filename,usecols=['id','drug_name','drug_cost'],dtype={'drug_cost':np.float64})
+	data=pd.read_csv(filename,usecols=['id','drug_name','drug_cost'])
+	data['drug_cost'] = data['drug_cost'].apply(pd.to_numeric,errors='coerce')
 	return data
 
 def make_outputfolder(output_path):
