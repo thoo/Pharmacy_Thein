@@ -1,5 +1,0 @@
-[
-  "test_functions.py::test_read_csv",
-  "test_functions.py::test_clean_data",
-  "test_functions.py::test_process_fun"
-]
