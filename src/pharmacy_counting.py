@@ -1,6 +1,6 @@
 import os
 from argparse import ArgumentParser
-from src.functions import *
+from functions import *
 
 # This is all the variable which can be passed. I use `argparse` library. 
 parser = ArgumentParser()

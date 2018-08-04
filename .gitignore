@@ -3,3 +3,5 @@ venv
 input/de_cc_data.txt
 .pytest_cache
 src/Draft
+src/.pytest_cache
+src/__pycache__
