@@ -1,5 +1,0 @@
-[
-  "src/py_test/test_functions.py::test_build_dict",
-  "src/py_test/test_functions.py::test_process_data",
-  "src/py_test/test_functions.py::test_write_csv"
-]
