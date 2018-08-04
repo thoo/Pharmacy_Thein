@@ -1,4 +1,5 @@
 import os
+import errno
 
 def build_dict(file_path):
 	""" This function removes the improper data and also build the dictionary at the same time. 
@@ -62,4 +63,9 @@ def write_csv(filepath,data):
 
 def make_outputfolder(output_path):
 	#Create an folder for output file if it doesn't exist. 
-	os.makedirs(os.path.dirname(output_path))
+	if not os.path.exists(os.path.dirname(output_path)):
+		try:
+			os.makedirs(os.path.dirname(output_path))
+		except OSError as exc: # Guard against race condition
+			if exc.errno != errno.EEXIST:
+				raise
