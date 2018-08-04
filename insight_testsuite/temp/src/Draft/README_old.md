@@ -1,4 +1,4 @@
-# Table of Contents
+`# Table of Contents`
 
 1. [Problem](README.md#problem)
 2. [Input Dataset](README.md#input-dataset)

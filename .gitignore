@@ -2,3 +2,4 @@ venv
 *.ipynb
 input/de_cc_data.txt
 .pytest_cache
+src/Draft
