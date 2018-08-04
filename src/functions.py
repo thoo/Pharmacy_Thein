@@ -62,4 +62,4 @@ def write_csv(filepath,data):
 
 def make_outputfolder(output_path):
 	#Create an folder for output file if it doesn't exist. 
-	os.makedirs(os.path.dirname(output_path), exist_ok=True)
+	os.makedirs(os.path.dirname(output_path))
