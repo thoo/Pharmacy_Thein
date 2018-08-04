@@ -1,5 +1,5 @@
 [
-  "src/py_test/test_functions.py::test_read_csv",
-  "src/py_test/test_functions.py::test_clean_data",
-  "src/py_test/test_functions.py::test_process_fun"
+  "src/py_test/test_functions.py::test_build_dict",
+  "src/py_test/test_functions.py::test_process_data",
+  "src/py_test/test_functions.py::test_write_csv"
 ]
