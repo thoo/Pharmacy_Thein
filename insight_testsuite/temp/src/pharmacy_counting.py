@@ -1,9 +1,6 @@
-import pandas as pd 
-import numpy as np 
 import os
 from argparse import ArgumentParser
 from src.functions import *
-np.seterr(divide='ignore', invalid='ignore')
 
 # This is all the variable which can be passed. I use `argparse` library. 
 parser = ArgumentParser()
@@ -32,17 +29,17 @@ def test_run():
 		output_path=os.sep.join(input_path.split(os.sep)[0:-2])+os.sep+'output'+os.sep+'top_cost_drug.txt'
 
 	
-	data=read_csv(input_path)
+	data_dict,skip_rows=build_dict(input_path)
 	
-	cleaned_data,rows=clean_data(data)
-	results=process_fun(cleaned_data)
+	results=process_data(data_dict)
+	
 
 	make_outputfolder(output_path)
 	
 	#Write a csv file.
-	results.to_csv(output_path,index=False)
+	write_csv(output_path,results)
 
-	print("\033[95m \033[1m {} rows have missing values and they are excluded in the process.".format(rows))
+	print("\033[95m \033[1m {} rows have missing values and they are excluded in the process.".format(skip_rows))
 
 if __name__ == '__main__':
 	test_run()

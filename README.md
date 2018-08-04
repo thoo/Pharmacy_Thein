@@ -14,15 +14,11 @@
 
 4. [Conclusion](#conclusion)
 
-
-
 # Challenge
 
 I will work on the challenge mentioned [here](https://github.com/InsightDataScience/pharmacy_counting). Here is the summary of the challenge. 
 
 > Imagine you are a data engineer working for an online pharmacy. You are asked to generate a list of all drugs, the total number of UNIQUE individuals who prescribed the medication, and the total drug cost, which must be listed in descending order based on the total drug cost and if there is a tie, drug name.
-
-
 
 In general, I was provided with a real-world data file in `csv` format and I have to manipulate and extract information data from it and write an output file in `csv` format.  Here is the example shown as a part of the instruction.
 
@@ -48,15 +44,11 @@ In general, I was provided with a real-world data file in `csv` format and I hav
 > AMBIEN,2,300
 > ```
 
-
-
 This is a fun and exciting project. For this challenge I will use `Python 3.6.4` with a few libraries mentioned in [**Package Requirements**](README.md#package-requirements) section. 
 
 # Implementation
 
 This section will walk you through the pre-requirements and the implementation of this challenge.  
-
-
 
 ## Package Requirements
 
@@ -66,13 +58,9 @@ I used `Python 3.6.4`. The following list is the pre-requirement for this challe
 atomicwrites==1.1.5
 attrs==18.1.0
 more-itertools==4.3.0
-numpy==1.15.0
-pandas==0.23.3
 pluggy==0.7.1
 py==1.5.4
 pytest==3.7.1
-python-dateutil==2.7.3
-pytz==2018.5
 six==1.11.0
 ```
 
@@ -87,16 +75,14 @@ cd Pharmacy_Thein
 
 **Second (if you want to use `virtualenv` otherwise skip this step.)**,
 
-* With `virtualenv`, 
-
-  ``` virtualenv -p python3 venv
+* With `virtualenv`, ``` virtualenv -p python3 venv
   virtualenv -p python3 venv
   source venv/bin/activate
   ```
 
 **Finally**, we can install all the required packages.
 
-``` pip 
+```pip
 pip install -r src/requirements.txt
 ```
 
@@ -106,9 +92,11 @@ First, you can check everything is woking by running `./run.sh` .  The script fo
 
 ```
 python ./src/pharmacy_counting.py \
-  				-i your_input_file_path \
-  				-o your_output_file_path
+                  -i your_input_file_path \
+                  -o your_output_file_path
 ```
+
+The `pharmacy_counting.py` also prints out the number of rows with any missing data which are excluded in the process.
 
 ## Details of Implementation
 
@@ -116,15 +104,13 @@ First, the columns `id,drug_name,drug_cost` of  the input data file  is loaded i
 
 This is a real-world data and therefore, I have a function to rigorously clean the data. After that I do count uniquely `id`  for each `drug_name` and also sum all the `drug_cost` for each `drug_name`.  
 
-
-
 All the functions mentioned aboved are located in `src/functions.py` . Here is the summary of each function:
 
-* **read_csv** : *Read selected columns ( 'id','drug_name', and 'drug_cost' ) from a csv file to memory. Make sure 'drug_cost' is in float data type*.
+* **build_dict** : *This function removes the improper data and also build the dictionary at the same time. It clean out the data by reassuring 'id' have to be an integer and  'drug_cost' can be able to converted to a float. If any row contains entries with incorrect data formats, this function will skip it and go to the next row in the data file.*
 
-* **clean_data** : *Clean data by removing typos and misplaced strings.*
+* **process_data** : *This function count the number of prescribers for each drug_name and at the same time, it also sums all the drug cost for each drug_name.*
 
-* **process_fun** : *This function will return drug name, total drug cost and total number of prescribers from input data files in descending order by 'total_cost' followed by 'drug_name'*.
+* **write_csv** : *Write the data back to a csv file with these values:'drug_name', 'num_prescriber', 'total_cost'.*.
 
 * **make_outputfolder** : *Make sure that the output foler exists and if it doesn't, create an folder named 'output'*.
 
@@ -138,14 +124,10 @@ python -m pytest ./src/py_test
 
 # Performance
 
-All the performance related processes are done on the sample datasets and the program is run on macbook pro 2014 model with 16 GB of memory. Building a social network graph takes about 3 seconds and the analysis takes about 6 seconds. UltraJSON gives 30% speed boost compared to the standard json library from python. The output of the profile on Some of the `if-else` statements are switched to dictionary comprehension to gain some performances. During the whole process, only a part of `stream_log.json` is on the memory and its size can be controlled by setting `-z` parameter. The default is 50,000. So this program is very scalable. 
-
-If I can load all json files to memory, there will definitely be an improvement on performance. However, it will have limitation on scalability. 
-
-I also experimented with `pandas and hdf5`. The `batch_log.json` contains multiple objects instead of a single line. Therefore, the read-out with `pandas.DataFrame.read_json` is slower than `ujson`.  If we do more than just finding the mean and standard deviation, it would be a better option to use `pandas dataframe with hdf5`. In this case, the query file format for `batch_log.json` and `stream_log.json` might be changed to be suitable for `pandas` dataframe. Right now depending on `event`, the keys of the transition is different. For example, `event=purchase` will not have `id1` and `id2` key and so on. 
-
-Currently, most of the time on my program is spent on reading and writing files. Instead of waiting the script to finish, I design to update any anomaly transition as soon as possible. 
+On my macbook pro 2014 model with 16 GB of memory, [the whole data file](https://drive.google.com/file/d/1fxtTLR_Z5fTO-Y91BnKOQd6J0VC9gPO3/view?usp=sharing) , which contains over 24 million records, was processed in **less than 160 seconds**.  I output of the `cProfile` is located at `./profile_output.txt`. 
 
 ## Conclusion
 
-Overall, it is an interesting and fundamental project which is very applicable to our daily life. I have written a scalable program with real time update to `flagged_purchases.json`. I wish I have more control over how the data is collected.  Moreover, if I can load all the data to the system memory, the script will be a lot simplier and readable than it is now.
+Overall, it is an interesting project and it is also fun to write the whole process in python without using any extra package such as pandas. 
+
+

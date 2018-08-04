@@ -11,7 +11,10 @@ def build_dict(file_path):
 	with open(file_path,'r') as f:
 		next(f)
 		for line in f:
-			per_id,_,_,drug_name,drug_cost=line.split(',')
+			line_to_list=line.split(',')
+			per_id=line_to_list[0]
+			drug_name=line_to_list[-2]
+			drug_cost=line_to_list[-1]
 			try:
 				int(per_id)
 				float(drug_cost)
